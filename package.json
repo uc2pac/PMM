@@ -1,0 +1,23 @@
+{
+  "name": "personal_project_management",
+  "version": "1.0.0",
+  "description": "Personal Message Management",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uc2pac/PMM.git"
+  },
+  "author": "yaroslav.basovskyy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uc2pac/PMM/issues"
+  },
+  "homepage": "https://github.com/uc2pac/PMM#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}
