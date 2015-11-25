@@ -5,8 +5,8 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/client'));
 
-app.get('/', function(req, res){
-  	res.sendFile('client/index.html');
+app.all('/*', function(req, res){
+  	res.sendFile('index.html', { root: __dirname + '/client' });
 });
 
 io.on('connection', function(socket){

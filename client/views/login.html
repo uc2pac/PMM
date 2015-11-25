@@ -1,0 +1,19 @@
+<form class="form-signin">
+    <h2 class="form-signin-heading">
+    	<span ng-if="controllerName === 'login'">Login to My messages</span>
+    	<span ng-if="controllerName === 'signup'">Sign up</span>
+    </h2>
+
+    <label class="sr-only">Email address</label>
+    <input type="email" class="form-control" ng-model="user.email" placeholder="Email address" required autofocus>
+
+    <label class="sr-only">Password</label>
+    <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+
+    <div ng-if="controllerName === 'login'">
+    	<button class="btn btn-primary" type="submit" ng-click="login()">Log in</button>
+    	<span>or</span> 
+    	<a ui-sref="signup">Sign up</a>
+    </div>
+    <button  ng-if="controllerName === 'signup'" class="btn btn-primary" type="submit" ng-click="signup()">Signup and Login</button>
+</form>

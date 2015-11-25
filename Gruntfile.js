@@ -4,8 +4,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
             src: {
-                files: ['client/js/app/**.js'],
-                tasks: ['concat']
+                files: ['client/js/app/**/**.js'],
+                tasks: ['default']
             }
         },
         concat: {
@@ -13,7 +13,14 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             dist: {
-                src: ['bower_components/angular/angular.min.js', 'client/js/dest/**.js'],
+                src: [
+                    // Vendor files
+                    'client/components/angular/angular.min.js', 
+                    'client/components/angular-ui-router/release/angular-ui-router.min.js', 
+                    'client/components/angular-bootstrap/ui-bootstrap-tpls.min.js', 
+                    // App files
+                    'client/js/dest/**/**.js'
+                ],
                 dest: 'client/js/bundle.js',
             },
         },
@@ -22,7 +29,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'client/js/app',
-                    src: '*.js',
+                    src: '**/**.js',
                     dest: 'client/js/dest'
                 }]
             }
@@ -41,6 +48,6 @@ module.exports = function(grunt) {
     grunt.registerTask('preuglify', 'uglify');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify', 'concat']);
+    grunt.registerTask('default', ['preuglify', 'concatenate']);
 
 };
