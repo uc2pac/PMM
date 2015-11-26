@@ -7,7 +7,9 @@
 	    // Controllers
 	    'pmm.controller.login',
 	    'pmm.controller.signup',
-	    'pmm.controller.messanger'  
+	    'pmm.controller.messanger',
+	    // Services
+	    'pmm.service.authentication'
 	]);
 
 	app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
@@ -49,4 +51,13 @@
 	            });
 	    }
 	]);
+
+	app.run(['$rootScope', '$state', 'AuthService', function ($rootScope, $state, AuthService) {
+	  	$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+	    	if (toState.name !== 'login' && toState.name !== 'signup' && AuthService.isLoggedIn() === false) {
+	    		event.preventDefault();
+	      		$state.go('login');
+	    	}
+	  	});
+	}]);
 })();

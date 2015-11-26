@@ -11,11 +11,12 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 separator: ';',
+                sourceMap: true
             },
             dist: {
                 src: [
                     // Vendor files
-                    'client/components/angular/angular.min.js', 
+                    'client/components/angular/angular.min.js',
                     'client/components/angular-ui-router/release/angular-ui-router.min.js', 
                     'client/components/angular-bootstrap/ui-bootstrap-tpls.min.js', 
                     // App files

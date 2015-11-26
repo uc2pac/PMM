@@ -1,18 +1,11 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+#!/usr/bin/env node
 
-app.use(express.static(__dirname + '/client'));
+var debug = require('debug')('passport-mongo'),
+    app = require('./app');
 
-app.all('/*', function(req, res){
-  	res.sendFile('index.html', { root: __dirname + '/client' });
-});
 
-io.on('connection', function(socket){
-  	console.log('a user connected');
-});
+app.set('port', process.env.PORT || 3000);
 
-http.listen(3000, function(){
-  	console.log('listening on port: 3000');
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
 });
