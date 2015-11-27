@@ -1,12 +1,17 @@
 angular.module('pmm.controller.login', []).
-	controller('LoginCtrl', ['$scope', function($scope) {
+	controller('LoginCtrl', ['$scope', '$state', 'AuthService', function($scope, $state, AuthService) {
 		$scope.controllerName = 'login';
 
 		$scope.user = {};
 
 		// Login user
 		$scope.login = function() {
-			console.log($scope.user);
+			AuthService.login($scope.user).then(function(data) {
+				console.log(data);
+				if (data === 200) {
+					$state.go('home');
+				}
+			});
 		};
 
 	}]);

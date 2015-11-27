@@ -7,9 +7,10 @@
 	    // Controllers
 	    'pmm.controller.login',
 	    'pmm.controller.signup',
-	    'pmm.controller.messanger',
+	    'pmm.controller.messenger',
 	    // Services
-	    'pmm.service.authentication'
+	    'pmm.service.authentication',
+	    'pmm.service.socket'
 	]);
 
 	app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
@@ -21,8 +22,8 @@
 	        $stateProvider
 	            .state('home', {
 	                url: '/',
-	                controller: 'MessangerCtrl',
-	                templateUrl: '/views/messanger.html'
+	                controller: 'MessengerCtrl',
+	                templateUrl: '/views/messenger.html'
 	            })
 	            .state('login', {
 	            	url: '/login',

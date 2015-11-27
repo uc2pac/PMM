@@ -13,11 +13,14 @@ var express = require('express'),
 // mongoose
 mongoose.connect('mongodb://localhost/pmm');
 
-// user schema/model
+// schema/model
 var User = require('./models/user.js');
+var Message = require('./models/message.js');
 
 // create instance of express
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // require routes
 var routes = require('./routes/api.js');
@@ -56,11 +59,41 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res) {
-  res.status(err.status || 500);
-  res.end(JSON.stringify({
-    message: err.message,
-    error: {}
-  }));
+    res.status(err.status || 500);
+    res.end(JSON.stringify({
+        message: err.message,
+        error: {}
+    }));
 });
 
-module.exports = app;
+// sockets
+io.on('connection', function (socket) {
+    var currentUser = 'uc2pac@gmail.com',
+        currentDate = new Date().toJSON().slice(0,10);
+
+    Message.getMessages(currentUser, currentDate, function(err, messages) {
+        if (err) {
+            console.log('error');
+        } else {
+            socket.emit('message', messages);
+        }
+    });
+
+    //socket.emit('message', message);
+    
+    socket.on('message', function (data, callback) {
+        data.user = currentUser;
+
+        var message = new Message(data);
+
+        message.save(function (err, messages) {
+            if (err) {
+                console.log('error');
+            } else {
+                callback(message);
+            }
+        });
+    });
+});
+
+module.exports = server;

@@ -1,7 +1,7 @@
 angular.module('pmm.service.authentication', []).
-	service('AuthService', ['$q', '$timeout', '$http', function($q, $timeout, $http) {
+	factory('AuthService', ['$q', '$timeout', '$http', function($q, $timeout, $http) {
 		// create user variable
-	    var user = null;
+	    var user = true;
 
 	    // return available functions for use in controllers
 	    return ({
@@ -24,27 +24,27 @@ angular.module('pmm.service.authentication', []).
 	      return user;
 	    }
 
-	    function login(username, password) {
+	    function login(userdata) {
 
 	      // create a new instance of deferred
 	      var deferred = $q.defer();
 
 	      // send a post request to the server
-	      $http.post('/login', {username: username, password: password})
+	      $http.post('/login', {username: userdata.email, password: userdata.password})
 	        // handle success
 	        .success(function (data, status) {
 	          if(status === 200 && data.status){
 	            user = true;
-	            deferred.resolve();
+	            deferred.resolve(status);
 	          } else {
 	            user = false;
-	            deferred.reject();
+	            deferred.reject(data);
 	          }
 	        })
 	        // handle error
 	        .error(function (data) {
 	          user = false;
-	          deferred.reject();
+	          deferred.reject(data);
 	        });
 
 	      // return promise object
@@ -62,12 +62,12 @@ angular.module('pmm.service.authentication', []).
 	        // handle success
 	        .success(function (data) {
 	          user = false;
-	          deferred.resolve();
+	          deferred.resolve(data);
 	        })
 	        // handle error
 	        .error(function (data) {
 	          user = false;
-	          deferred.reject();
+	          deferred.reject(data);
 	        });
 
 	      // return promise object
@@ -75,24 +75,24 @@ angular.module('pmm.service.authentication', []).
 
 	    }
 
-	    function register(username, password) {
+	    function register(userdata) {
 
 	      // create a new instance of deferred
 	      var deferred = $q.defer();
 
 	      // send a post request to the server
-	      $http.post('/register', {username: username, password: password})
+	      $http.post('/register', {username: userdata.email, password: userdata.password})
 	        // handle success
 	        .success(function (data, status) {
 	          if(status === 200 && data.status){
-	            deferred.resolve();
+	            deferred.resolve(status);
 	          } else {
-	            deferred.reject();
+	            deferred.reject(data);
 	          }
 	        })
 	        // handle error
 	        .error(function (data) {
-	          deferred.reject();
+	          deferred.reject(data);
 	        });
 
 	      // return promise object
