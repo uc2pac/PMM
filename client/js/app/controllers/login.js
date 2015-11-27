@@ -7,7 +7,6 @@ angular.module('pmm.controller.login', []).
 		// Login user
 		$scope.login = function() {
 			AuthService.login($scope.user).then(function(data) {
-				console.log(data);
 				if (data === 200) {
 					$state.go('home');
 				}

@@ -2,7 +2,7 @@
 	<div class="col-md-4">
 		<div>
 			<h3>Username's messages</h3>
-			<uib-datepicker ng-model="dt" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+			<uib-datepicker ng-model="inlineDatepicker.date" show-weeks="true" class="well well-sm"></uib-datepicker>
 		</div>
 		<div>
 			<h3>Add new message</h3>
@@ -10,9 +10,10 @@
 				<form ng-submit="postMessage()">
 					<div class="form-group">
 						<div class="input-group col-md-9">
-							<input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="message.date" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+							<input type="text" class="form-control" uib-datepicker-popup="{{datepicker.format}}" ng-model="message.date" is-open="datepicker.opened" ng-required="true" close-text="Close" />
+
 			              	<span class="input-group-btn">
-			                	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			                	<button type="button" class="btn btn-default" ng-click="datepicker.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			              	</span>
 			            </div>
 			        </div>
@@ -30,13 +31,25 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div class="well">
-			<ul>
-				<li ng-repeat="message in messages">
-					<p>{{message.subject}}</p>
-					<p>{{message.message}}</p>
-				</li>
-			</ul>
+		<h3>Your messages for {{inlineDatepicker.date | date: 'longDate'}}</h3>
+
+		<uib-alert 
+			ng-if="messageAlert"
+			dismiss-on-timeout="3000" 
+			close="closeAlert()"
+			type="success">
+				<span>Your message was added succesfully. Select {{inlineDatepicker.date | date: 'longDate'}} date to view it.</span>
+		</uib-alert>
+
+		<div class="alert alert-warning" ng-show="!messages.length">
+			<span>You don't have messages for this day!</span>
 		</div>
+
+		<div class="panel panel-default" ng-repeat="message in messages">
+  			<div class="panel-body">
+  				<h4>{{message.subject}}</h4>
+			    <p>{{message.message}}</p>
+  			</div>
+  		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 angular.module('pmm.controller.signup', []).
-	controller('SignupCtrl', ['$scope', 'AuthService', function($scope, AuthService) {  
+	controller('SignupCtrl', ['$scope', '$state', 'AuthService', function($scope, $state, AuthService) {  
 		$scope.controllerName = 'signup'; 
 
 		$scope.user = {};

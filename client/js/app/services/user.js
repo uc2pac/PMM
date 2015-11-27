@@ -1,7 +1,7 @@
 angular.module('pmm.service.authentication', []).
-	factory('AuthService', ['$q', '$timeout', '$http', function($q, $timeout, $http) {
+	factory('AuthService', ['$q', '$rootScope', '$timeout', '$http', function($q, $rootScope, $timeout, $http) {
 		// create user variable
-	    var user = true;
+	    var user = null;
 
 	    // return available functions for use in controllers
 	    return ({
@@ -35,6 +35,8 @@ angular.module('pmm.service.authentication', []).
 	        .success(function (data, status) {
 	          if(status === 200 && data.status){
 	            user = true;
+
+	            $rootScope.currentUser = userdata.email;
 	            deferred.resolve(status);
 	          } else {
 	            user = false;
@@ -85,6 +87,7 @@ angular.module('pmm.service.authentication', []).
 	        // handle success
 	        .success(function (data, status) {
 	          if(status === 200 && data.status){
+	          	$rootScope.currentUser = userdata.email;
 	            deferred.resolve(status);
 	          } else {
 	            deferred.reject(data);

@@ -15,7 +15,6 @@ angular.module('pmm.service.socket', []).
                     var args = arguments;
                     $rootScope.$apply(function () {
                         if (callback) {
-                            console.log('test');
                             callback.apply(socket, args);
                         }
                     });

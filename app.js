@@ -68,22 +68,19 @@ app.use(function(err, req, res) {
 
 // sockets
 io.on('connection', function (socket) {
-    var currentUser = 'uc2pac@gmail.com',
-        currentDate = new Date().toJSON().slice(0,10);
-
-    Message.getMessages(currentUser, currentDate, function(err, messages) {
-        if (err) {
-            console.log('error');
-        } else {
-            socket.emit('message', messages);
-        }
+    // Get messages for specific date and current user
+    socket.on('messages:get', function (params, callback) {
+        Message.getMessages(params.currentUser, params.selectedDate, function(err, messages) {
+            if (err) {
+                console.log('error');
+            } else {
+                callback(messages);
+            }
+        });
     });
 
-    //socket.emit('message', message);
-    
+    // Save message and return
     socket.on('message', function (data, callback) {
-        data.user = currentUser;
-
         var message = new Message(data);
 
         message.save(function (err, messages) {

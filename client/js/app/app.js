@@ -17,7 +17,7 @@
 	    function ($locationProvider, $stateProvider, $urlRouterProvider) {
 
 	        $locationProvider.html5Mode(true);
-	        $urlRouterProvider.otherwise('error');
+	        $urlRouterProvider.otherwise('/');
 
 	        $stateProvider
 	            .state('home', {
